@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS Tampilan Clean & Modern
+# Custom CSS 
 st.markdown("""
     <style>
         .stApp {
@@ -54,7 +54,7 @@ st.markdown("""
 st.markdown("""
     <div class="main-header">
         <h1>📈 Dashboard Indeks Perubahan Harga (IPH) 2026</h1>
-        <p>Monitoring & Analisis Komparatif IPH, Komoditas Andil, dan Fluktuasi Harga (<b>Kab. Kuningan</b> dan <b>Prov. Jawa Barat</b>)</p>
+        <p>Monitoring IPH, Komoditas Andil Perubahan Harga, dan Fluktuasi Harga Tertinggi (<b>Kab. Kuningan</b> dan <b>Prov. Jawa Barat</b>)</p>
     </div>
 """, unsafe_allow_html=True)
 

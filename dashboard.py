@@ -1,15 +1,34 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+from PIL import Image
+import base64
+from io import BytesIO
 
 # =============================================================================
-# 🎨 1. KONFIGURASI HALAMAN & CUSTOM STYLING
+# 🎨 1. KONFIGURASI HALAMAN & CUSTOM STYLING (ICON PNG)
 # =============================================================================
+try:
+    icon_img = Image.open('logo BPS.png')
+except Exception:
+    icon_img = "📈"
+
 st.set_page_config(
-    page_title="Dashboard IPH Kab. Kuningan",
-    page_icon="📈",
+    page_title="Dashboard Indeks Perubahan Harga",
+    page_icon=icon_img,
     layout="wide"
 )
+
+# Fungsi untuk konversi gambar lokal ke base64 agar bisa masuk ke dalam HTML
+def get_image_base64(path):
+    try:
+        with open(path, "rb") as image_file:
+            encoded = base64.b64encode(image_file.read()).decode()
+            return f"data:image/png;base64,{encoded}"
+    except Exception:
+        return ""
+
+logo_base64 = get_image_base64('logo BPS.png')
 
 # Custom CSS 
 st.markdown("""
@@ -42,7 +61,7 @@ st.markdown("""
         }
         div[data-testid="stMetric"] {
             background-color: #ffffff;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #000080;
             padding: 15px 20px;
             border-radius: 12px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.04);
@@ -50,13 +69,28 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Header Title Banner
-st.markdown("""
-    <div class="main-header">
-        <h1>📈 Dashboard Indeks Perubahan Harga (IPH) 2026</h1>
-        <p>Monitoring IPH, Komoditas Andil Perubahan Harga, dan Fluktuasi Harga Tertinggi (<b>Kab. Kuningan</b> dan <b>Prov. Jawa Barat</b>)</p>
-    </div>
-""", unsafe_allow_html=True)
+# Header 
+if logo_base64:
+    header_content = f"""
+        <div class="main-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="{logo_base64}" style="width: 120px; height: 90px; object-fit: contain;">
+                <div>
+                    <h1>Dashboard Indeks Perubahan Harga (IPH) 2026</h1>
+                    <p>Monitoring IPH, Komoditas Andil Perubahan Harga, dan Fluktuasi Harga Tertinggi (<b>Kab. Kuningan</b> dan <b>Prov. Jawa Barat</b>)</p>
+                </div>
+            </div>
+        </div>
+    """
+else:
+    header_content = """
+        <div class="main-header">
+            <h1>📈 Dashboard Indeks Perubahan Harga (IPH) 2026</h1>
+            <p>Monitoring IPH, Komoditas Andil Perubahan Harga, dan Fluktuasi Harga Tertinggi (<b>Kab. Kuningan</b> dan <b>Prov. Jawa Barat</b>)</p>
+        </div>
+    """
+
+st.markdown(header_content, unsafe_allow_html=True)
 
 # =============================================================================
 # 2. LINK CSV GOOGLE SHEET
